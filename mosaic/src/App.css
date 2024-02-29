@@ -1,4 +1,10 @@
 /* Kavoon 글꼴을 가져오는 코드 */
+@font-face {
+  font-family : "LINE Seed Sans KR";
+  font-weight : normal;
+  src : url("./image/LINESeedKR-Rg.ttf") format ("truetype");
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Kavoon&display=swap');
 
 .App-header {
