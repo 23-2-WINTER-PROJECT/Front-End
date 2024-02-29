@@ -1,7 +1,7 @@
 @font-face {
   font-family : "LINE Seed Sans KR";
   font-weight : normal;
-  src : url("./image/LINESeedKR-Rg.otf") format ("truetype");
+  src : url("./image/LINESeedKR-Rg.ttf") format ("truetype");
 }
 
 body {
