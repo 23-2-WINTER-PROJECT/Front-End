@@ -5,52 +5,166 @@
   src : url("./image/LINESeedKR-Rg.ttf") format ("truetype");
 }
 
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Kavoon&display=swap');
 
-.App-header {
+/* 전체 앱의 스타일 */
+.App {
+  text-align: center;
+  color: white;
   background-color: #1B1B1B;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 0 20px; /* 전체 앱의 좌우 패딩 추가 */
+}
+
+/* 상단 헤더와 하단 푸터 */
+.App-header, .App-footer {
+  background-color: black;
+  padding: 20px 0; /* 위아래 패딩 조정 */
+  font-size: 50px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* 헤더에 Kavoon 글꼴 적용 */
+.App-header {
+  font-family: 'Kavoon';
+}
+
+/* 푸터에 LINE Seed Sans KR 글꼴 적용 */
+.App-footer {
+  font-family: 'LINE Seed Sans KR';
+  font-weight: bold;
+  font-size: 30px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+}
+
+/* 콘텐츠 영역 */
+.content {
+  font-family: 'LINE Seed Sans KR';
+  font-size: 30px;
+  flex: 1;
+  padding-left: 300px; /* 좌우 패딩을 동일하게 설정하여 레이아웃 일관성 유지 */
+  padding-right : 300px;
+  text-align: left;
+}
+
+/* 이미지 그리드 */
+.image-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* 이미지 스타일 */
+.image-container img {
+  width: 100%;
+  border-radius: 8px;
+  transition: transform 1s ease-in-out;
+}
+
+/* 이미지 호버 효과 */
+.image-container img:hover {
+  transform: scale(1.1);
+}
+
+/* 버튼 스타일 */
+.A-Button {
+  width: 400px;
+  display: inline-block;
+  background-color: #ff6347;
+  color: white;
+  padding: 10px 20px;
+  font-size: 25px;
+  font-weight: 400;
+  text-decoration: none;
+  border-style: none;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+
+/* 버튼 호버 효과 */
+.A-Button:hover {
+  background-color: #555;
+}
+
+/* 강조된 텍스트 */
+.highlighted-text {
+  color: #F2635D;
+}
+
+/* 제목 스타일 */
+.Title {
+  font-size: 70px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* 텍스트 스타일 */
+.Text {
+  font-size: 25px;
+  color: lightgray;
+  margin-bottom: 20px;
+}
+
+/* 중요한 텍스트 스타일 */
+.im-Text {
+  font-size: 40px;
+  font-weight: bold;
   color: white;
 }
 
-.Title{
-  text-Align : center;
-  font-size : 70px;
-  font-family: 'Kavoon', cursive;
+/* 굵은 텍스트 스타일 */
+.bold-text {
+  font-weight: bold;
+  color: white;
 }
 
-.highlighted-text {
-  color: #FE6F61; /* 변경하고자 하는 색상을 지정합니다. */
+/* 이미지 컨테이너 및 메인 이미지 스타일 */
+.slider {
+  width: 80%;
+  margin: 20px auto;
 }
 
-.Text{
-  text-Align : center;
-  font-size : 25px;
-  font-family: 'LINE Seed Sans KR', Bold;
-  margin-top : 50px;
-  margin-bottom : 100px;
+.image-container img,
+img[alt="Main Image"] {
+  width: 100%;
+  border-radius: 20px;
+  transition: filter 0.3s ease;
 }
 
-.Button{
-  width : 500px;
-  height : 80px;
-  border-radius : 15px;
-  font-size : 40px;
-  text-Align : center;
-  background-color : #FE6F61;
-  color : white;
-  font-family: 'Kavoon', cursive;
-  Justify-content : center;
-  margin-top : 50px;
-  padding-top : 10px;
-  box-shadow : 7px 7px 7px black;
-}
-
-.Button:active{
-  box-shadow : inset 10px 10px 10px black;
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media screen and (max-width: 768px) {
+  .App {
+    padding: 0 10px; /* 작은 화면에 대한 패딩 조정 */
+  }
+  .content {
+    padding: 10px; /* 작은 화면에 대한 콘텐츠 패딩 조정 */
+  }
 }

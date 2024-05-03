@@ -1,22 +1,22 @@
-import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navigation from "./Navigation.js";
 import Login from "../routes/Login.js";
-import Mainpage from "../routes/Mainpage.js"
-import Mypage from "../routes/Mypage.js"
+import Mainpage from "../routes/Mainpage.js";
+import Account from "../routes/Account.js";
+import Mypage from "../routes/Mypage.js";
 
-import React, {useState, useEffect } from "react";
+import React from "react";
 
-function AppRouter(props){
-    return(
-        <div>
-            <Routes>
-                <Route path = "/" element = {<Mainpage/>}/>
-                <Rotue path = "/main" element = {<Mainpage/>}/>
-                <Route path = "/account" element = {<Account/>}/>
-                <Route path = "/login" element = {<Login/>}/>
-                <Rotue path = "/mypage" element = {<Mypage/>}/>
-            </Routes>
-        </div>
-    )
+function AppRouter(props) {
+  return (
+      <Routes>
+        <Route path="/" element={<Mainpage />} />
+        <Route path="/main" element={<Mainpage />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/mypage" element={<Mypage />} />
+      </Routes>
+  );
 }
+
 export default AppRouter;
