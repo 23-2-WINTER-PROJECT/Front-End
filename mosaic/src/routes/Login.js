@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import logo from '../image/logo.png';
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -45,53 +49,76 @@ const Login = () => {
 
   return (
     <div className="L-background">
-      <div className="L-rectangle">
-        <Link
-          to="/"
-          style={{ textDecoration: "none" }}
-          className="L-Title-text"
-        >
-          {" "}
-          {/* Link 컴포넌트로 변경 */}
-          Mos-<span className="L-highlighted-text">AI</span>c
-        </Link>
-        <p className="L-login-text">
-          사이트 이용이 처음이라면?
-          <Link
-            to="/account"
-            style={{ textDecoration: "none" }}
-            className="L-to-account-Button"
-          >
-            회원가입
-          </Link>
-        </p>
-        <form onSubmit={loginto}>
-          <input
-            name="emailID"
-            type="text"
-            className="L-email-box"
-            placeholder="ID"
-            required
-            value={emailID}
-            onChange={onChange}
-          />{" "}
-          <input
-            name="password"
-            type="password"
-            className="L-password-box"
-            placeholder="password"
-            required
-            value={password}
-            onChange={onChange}
-          />
-          <br />
-          <button className="L-login-Button">로그인</button>
-          {!isCorrect && (
-            <p className="L-noneCorrect">
-              ID 또는 비밀번호가 맞지 않습니다. 다시 확인해주세요.
-            </p>
-          )}
-        </form>
+      <div classNmae = "container"> 
+        <div className = "row">
+          <div className = "col logo-img">
+            <div className = "title-div">
+              <Link to="/"
+                style={{ textDecoration: "none" }}
+                className="L-Title-text"
+              >
+              {" "}
+              <img src = {logo} width = "60%"/>
+              <br/>
+              Mos-<span className="L-highlighted-text">AI</span>c
+              </Link>
+              {/* <p className = "Text">이제는 함께하세요</p> */}
+            </div>
+          </div>
+          <div className = "col main-div">
+            <div className = "login-div">
+              <div className="L-rectangle">
+                <p className = "login-Title">로그인 하기</p>
+                <p className = "login-detail">Mos-AIc로 여러분의 개인정보를 보호하세요.</p>
+                <form onSubmit={loginto}>
+                  <input
+                    name="emailID"
+                    type="text"
+                    className="L-email-box"
+                    placeholder="ID"
+                    required
+                    value={emailID}
+                    onChange={onChange}
+                  />{" "}
+                  <input
+                    name="password"
+                    type="password"
+                    className="L-password-box"
+                    placeholder="password"
+                    required
+                    value={password}
+                    onChange={onChange}
+                  />
+                  <br />
+                  <Link
+                    to="/account"
+                    style={{ textDecoration: "none" }}
+                    className="L-to-password-Button"
+                  >
+                    비밀번호를 잊으셨나요?
+                  </Link>
+                  <br/>
+                  <button className="L-login-Button">로그인</button>
+                  {!isCorrect && (
+                    <p className="L-noneCorrect">
+                      ID 또는 비밀번호가 맞지 않습니다. 다시 확인해주세요.
+                    </p>
+                  )}
+                </form>
+                <p className="L-login-text">
+                  사이트 이용이 처음이라면?
+                  <Link
+                    to="/account"
+                    style={{ textDecoration: "none" }}
+                    className="L-to-account-Button"
+                  >
+                    회원가입
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

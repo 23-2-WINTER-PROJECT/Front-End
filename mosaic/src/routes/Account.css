@@ -30,19 +30,19 @@
 }
 
 .A-rectangle{
-    width : 650px;
-    height : 800px;
+    width : 500px;
+    height : 600px;
     border-radius: 10px;
     border: 5px solid #696969;
     background-color : #1B1B1B;
     margin: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     cursor: pointer;
-    padding: 70px;
-    text-align : center;
+    padding: 40px;
+    padding-top : 70px;
 }
 
 .A-account-title{
@@ -50,16 +50,7 @@
     font-family : 'LINE Seed Sans KR', Bold;
     font-weight : bold;
     color : white;
-    margin-top : -20px;
-}
-
-.A-text-title{
-    font-family : 'LINE Seed Sans KR', Bold;
-    font-size : 20px;
-    text-align : left;
-    color : white;
-    margin-bottom:-10px;
-    margin-right : 350px;
+    margin-bottom : -5px;
 }
 
 .A-email-box{
@@ -73,8 +64,7 @@
     font-size : 25px;
     font-family : 'LINE Seed Sans KR', Bold;
     font-weight : 200;
-    padding-left : 25px;
-    margin-bottom : -10px;
+    margin-bottom : 5px;
 }
 
 .A-password-box{
@@ -88,43 +78,32 @@
     font-size : 25px;
     font-family : 'LINE Seed Sans KR', Bold;
     font-weight : 200;
-    margin-top : 30px;
-    margin-bottom : -30px;
-    padding-left : 25px;
-}
-
-.A-checkbox-text{
-    font-size : 20px;
-    font-family : 'LINE Seed Sans KR', Bold;
-    font-weight : 200;
-    color : white;
-    text-align : center;
-    margin-top : -40px;
-    margin-bottom : 10px;
-}
-
-.A-checkbox{
-    width : 20px;
-    height : 20px;
-    margin-top : -5px;
-    margin-right : 10px;
-    text-align : center;
+    margin-top : 10px;
 }
 
 .A-account-Button{
-    width : 500px;
-    height : 70px;
+    margin: 15px 0;
+    margin-top : 30px;
+    width: 410px;
+    height: 60px;
+    flex-shrink: 0;
     border : none;
-    border-radius : 20px;
-    background-color : #FE6F61;
-    color : white;
-    text-align : center;
-    font-size : 35px;
-    font-family : 'LINE Seed Sans KR', Bold;
-    font-weight : bold;
-    margin-top : 40px;
-    padding-top : 10px;
+    border-radius: 20px;
+    background: #ff6347;
+    color: #fff;
+    text-align: center;
+    font-family: 'LINE Seed Sans KR';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    transition: background-color 0.3s;
 }
+
+.A-account-Button:hover{
+    background-color: #555;
+}
+
 
 .idAvailable {
     color: #FE6F61;
@@ -135,3 +114,27 @@
     padding-top : -50px;
     padding-bottom : -30px;
 }
+
+
+
+@media screen and (max-width: 1200px) {
+    .logo-img {
+      display: none;
+    }
+    .login-div,
+    .login-detail,
+    .login-main,
+    .title-div,
+    .login-detail {
+      text-align: center;
+    }
+    .L-to-password-Button{
+      text-align : left;
+    }
+    .detail-bar {
+      width: 100%;
+    }
+    .title-div {
+      margin-top: 10%;
+    }
+  }

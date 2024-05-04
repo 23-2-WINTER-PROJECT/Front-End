@@ -7,7 +7,7 @@
 }
 
 .L-background {
-    background-color: #1B1B1B;
+    background-color: #1B1B1B; /* 변경: 좀 더 어두운 톤으로 조정 */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -17,19 +17,72 @@
     color: white;
 }
 
-.L-rectangle{
-    width : 650px;
-    height : 620px;
+.col{
+    justify-content: center;
+    align-items: center;
+    text-align : center;
+}
+
+.logo-img{
+    height : 0%;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-div {
+    text-align: left;
+}
+
+.row{
+    justify-content: center;
+    align-items: center;
+}
+
+.login-div input {
+    margin-top: 5px;
+    padding-left: 10px;
+    width: 410px;
+    height: 60px;
+    flex-shrink: 0;
     border-radius: 10px;
-    border: 5px solid #696969;
-    background-color : #1B1B1B;
-    margin: auto;
+    color: #6f6f6f;
+    font-family: LINE Seed Sans KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: normal;
+    outline: none;
+}
+
+
+.main-div {
+    margin-left: 20px;
+}
+.login-main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    flex-shrink: 0;
+    color: #ff6347;
+    font-family: LINE Seed Sans KR;
+    font-size: 60px;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.L-rectangle{
+    width : 500px; /* 변경 없음 */
+    height : 520px; /* 변경 없음 */
+    border-radius: 10px; /* 변경 없음 */
+    border: 5px solid #696969; /* 변경: 테두리를 강조 */
+    background-color : #1B1B1B; /* 변경 없음 */
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
     cursor: pointer;
-    padding: 70px;
+    padding: 40px; /* 변경 없음 */
 }
 
 .L-Title-text{
@@ -38,25 +91,56 @@
     font-family: 'Kavoon', cursive;
     margin-bottom : 20px;
     color : white;
+    margin-top : -20px;
 }
 
 .L-highlighted-text {
-    color: #FE6F61; /* 변경하고자 하는 색상을 지정합니다. */
+    color: #ff6347; /* 변경하고자 하는 색상을 지정합니다. */
+}
+
+.login-Title{
+    font-family : 'LINE Seed Sans KR';
+    font-weight : 700;
+    font-size : 40px;
+    text-align : left;
+    margin-bottom : -5px;
+}
+
+.login-detail{
+    font-family : 'LINE Seed Sans KR';
+    font-weight : 300;
+    font-size : 20px;
+    text-align : left;
 }
 
 .L-login-text{
-    font-size : 30px;
+    font-size : 20px;
     font-family : 'LINE Seed Sans KR', Bold;
     font-weight : 200;
     color : white;
+    text-align : center;
+    justify-content: center;
+}
+
+.L-to-password-Button{
+    color : #ff6347;
+    font-size : 15px;
+    font-family : 'LINE Seed Sans KR', Bold;
+    font-weight : 300;
+    text-align : left;
+    margin-left : 10px;
+    margin-top : -8px;
+    margin-bottom : 5px;
 }
 
 .L-to-account-Button{
-    color : #FE6F61;
-    font-size : 30px;
+    color : #ff6347;
+    font-size : 20px;
     font-family : 'LINE Seed Sans KR', Bold;
     font-weight : bold;
     margin-left : 10px;
+    text-align : center;
+    justify-content: center;
 }
 
 .L-email-box{
@@ -86,22 +170,32 @@
     font-family : 'LINE Seed Sans KR', Bold;
     font-weight : 200;
     margin-top : 5px;
+    margin-bottom : -5px;
     padding-left : 25px;
 }
 
-.L-login-Button{
-    width : 500px;
-    height : 70px;
-    border : none;
-    border-radius : 20px;
-    background-color : #FE6F61;
-    color : white;
-    text-align : center;
-    font-size : 35px;
-    font-family : 'LINE Seed Sans KR', Bold;
-    font-weight : bold;
+
+.L-login-Button {
+    margin: 15px 0;
     margin-top : 30px;
-    padding-top : 10px;
+    width: 410px;
+    height: 60px;
+    flex-shrink: 0;
+    border : none;
+    border-radius: 20px;
+    background: #ff6347;
+    color: #fff;
+    text-align: center;
+    font-family: 'LINE Seed Sans KR';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    transition: background-color 0.3s;
+  }
+
+.L-login-Button:hover{
+    background-color: #555;
 }
 
 .L-noneCorrect{
@@ -111,4 +205,30 @@
     font-weight : 100;
     text-align : center;
     color : white;
+}
+
+.title-div {
+    text-align: center;
+  }
+
+@media screen and (max-width: 1200px) {
+  .logo-img {
+    display: none;
+  }
+  .login-div,
+  .login-detail,
+  .login-main,
+  .title-div,
+  .login-detail {
+    text-align: center;
+  }
+  .L-to-password-Button{
+    text-align : left;
+  }
+  .detail-bar {
+    width: 100%;
+  }
+  .title-div {
+    margin-top: 10%;
+  }
 }

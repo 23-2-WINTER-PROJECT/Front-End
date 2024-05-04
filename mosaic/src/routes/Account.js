@@ -2,15 +2,30 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Account.css";
-import { Link, useNavigate } from "react-router-dom";
+import "./Login.css";
+import { Link, useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import Navigation from "../components/Navigation";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import logo from '../image/logo.png';
 import { idDuplicateCheck, signup } from "../components/authService.js";
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 
 function Account() {
+    const location = useLocation();
     return (
-        <div>
-        <Background />
-        </div>
+        <TransitionGroup>
+            <CSSTransition
+                key={location.key}
+                timeout={5000}
+                classNames="page-transition"
+            >
+            <div>
+                <Background />
+            </div>
+            </CSSTransition>
+        </TransitionGroup>
     );
 }
 
@@ -124,61 +139,86 @@ const MakeAccount = () => {
 };
 
     return (
-        <div>
-            <div className="A-rectangle">
-                <Link
-                    to="/"
-                    style={{ textDecoration: "none" }}
-                    className="A-Title-text"
-                >{" "}
-                Mos-<span className="A-highlighted-text">AI</span>c
-                </Link>
-                <p className="A-account-title">회원가입</p>
-                <form onSubmit={signupHandler}>
-                    <input
-                        className="A-email-box"
-                        onChange={onChangeIdHandler}
-                        type="text"
-                        id="id"
-                        name="id"
-                        value={id}
-                        maxLength={10}
-                        placeholder="ID"
-                    />
-                    {idError && (
-                        <small className={isIdAvailable ? "idAvailable" : "idAvailable"}>
-                        {idError}
-                        </small>
-                    )}{" "}
-                    <input
-                        className="A-password-box"
-                        onChange={onChangePasswordHandler}
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={password}
-                        maxLength={16}
-                        placeholder="PW"
-                    />
-                    <input
-                        className="A-password-box"
-                        onChange={onChangePasswordHandler}
-                        type="password"
-                        id="confirm"
-                        name="confirm"
-                        value={confirm}
-                        maxLength={16}
-                        placeholder="PW again"
-                    />
-                    {confirmError && (
-                        <small className="idAvailable">{confirmError}</small>
-                    )}{" "}
-                    <br />
-                    <button type="submit" className="A-account-Button">
-                        회원가입
-                    </button>
-                </form>
-                <br />
+        <div className = "L-background">
+            <div className = "container">
+                <div className = "row">
+                    <div className = "col logo-img">
+                        <div className = "title-div">
+                            <Link to="/"
+                                style={{ textDecoration: "none" }}
+                                className="L-Title-text"
+                            >
+                            {" "}
+                            <img src = {logo} width = "60%"/>
+                            <br/>
+                            Mos-<span className="L-highlighted-text">AI</span>c
+                            </Link>
+                        </div>
+                    </div>
+                    <div className = "col main-div">
+                        <div className = "login-div">
+                            <div className="A-rectangle">
+                                <p className="A-account-title">회원가입 하기</p>
+                                <p className = "login-detail">Mos-AIc로 당신의 개인정보를 보호하세요.</p>
+                                <form onSubmit={signupHandler}>
+                                    <input
+                                        className="A-email-box"
+                                        onChange={onChangeIdHandler}
+                                        type="text"
+                                        id="id"
+                                        name="id"
+                                        value={id}
+                                        maxLength={10}
+                                        placeholder="ID"
+                                    />
+                                    {idError && (
+                                        <small className={isIdAvailable ? "idAvailable" : "idAvailable"}>
+                                        {idError}
+                                        </small>
+                                    )}{" "}
+                                    <input
+                                        className="A-password-box"
+                                        onChange={onChangePasswordHandler}
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        value={password}
+                                        maxLength={16}
+                                        placeholder="PW"
+                                    />
+                                    <input
+                                        className="A-password-box"
+                                        onChange={onChangePasswordHandler}
+                                        type="password"
+                                        id="confirm"
+                                        name="confirm"
+                                        value={confirm}
+                                        maxLength={16}
+                                        placeholder="PW again"
+                                    />
+                                    {confirmError && (
+                                        <small className="idAvailable">{confirmError}</small>
+                                    )}{" "}
+                                    <br />
+                                    <button type="submit" className="A-account-Button">
+                                        회원가입
+                                    </button>
+                                </form>
+                                <p className="L-login-text">
+                                    이미 계정이 있으신가요?
+                                    <Link
+                                        to="/login"
+                                        style={{ textDecoration: "none" }}
+                                        className="L-to-account-Button"
+                                    >
+                                        로그인
+                                    </Link>
+                                </p>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

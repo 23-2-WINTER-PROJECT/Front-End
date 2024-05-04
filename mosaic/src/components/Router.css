@@ -1,0 +1,25 @@
+.page {
+    position: absolute; /* 필수 */
+    width: 100vw;
+    height: 100vh;
+}
+
+.page-transition-enter {
+    z-index: 1;
+    transform: translateX(100%);
+}
+
+.page-transition-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms;
+}
+
+.page-transition-exit {
+    z-index: 0;
+    transform: translateX(0);
+}
+
+.page-transition-exit-active {
+    transform: translateX(-100%);
+    transition: transform 300ms;
+}
