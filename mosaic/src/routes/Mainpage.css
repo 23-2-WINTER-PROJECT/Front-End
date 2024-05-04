@@ -7,14 +7,77 @@
 }
 
 .M-background {
+    text-align: center;
+    color: white;
     background-color: #1B1B1B;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+.left{
+
+}
+
+.mid{
+    padding : 20px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    justify-content: flex-start; 
+    padding: 20px;
+}
+
+.form-select{
+    font-family: 'LINE Seed Sans KR';
+    font-size : 20px;
+}
+
+
+.download-button{
+    width: 250px;
+    height: 50px;
+    flex-shrink: 0;
+    border-color : #ff6347;
+    border-radius: 10px;
+    background: none;
+    color: #fff;
+    text-align: center;
+    font-family: 'LINE Seed Sans KR';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    transition: background-color 0.3s;
+}
+
+.delete-button{
+    margin-top : 10px;
+    width: 250px;
+    height: 50px;
+    flex-shrink: 0;
+    border-color : #ff6347;
+    border-radius: 10px;
+    background: none;
+    color: #fff;
+    text-align: center;
+    font-family: 'LINE Seed Sans KR';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    transition: background-color 0.3s;
+}
+
+.download-button:hover{
+    background-color: #ff6347;
+}
+
+.delete-button:hover{
+    background-color: #ff6347;
 }
 
 .icon {
@@ -39,8 +102,8 @@
 }
 
 .upload-box{
-    width: 900px;
-    height: 600px;
+    width: 700px;
+    height: 500px;
     border-radius: 10px;
     border: 5px dashed #696969;
     background-color : #1B1B1B;
@@ -102,18 +165,21 @@
 }
 
 .submit-button{
-    width : 500px;
-    height : 80px;
+    width : 350px;
+    height : 70px;
     border-radius : 15px;
-    font-size : 40px;
+    font-size : 30px;
     text-Align : center;
-    background-color : #FE6F61;
+    background-color : #ff6347;
     color : white;
-    font-family: 'Kavoon', cursive;
+    font-family: 'Kavoon';
     Justify-content : center;
     margin-top : 50px;
     padding-top : 10px;
-    box-shadow : 7px 7px 7px black;
+}
+
+.submit-button:hover{
+background-color: #555;
 }
 /* 
 .upload-image{

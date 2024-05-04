@@ -1,36 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Kavoon&display=swap');
 
 
-.Navbar {
-    background-color: black;
-    height: 87px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.nav-header{
+    position: sticky;
+    top: 0; /* 화면 상단에 고정 */
+    width: 100%;
+    z-index: 1000;
+    padding : -8px;
 }
 
+.Navbar {
+    background-color: black;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+
 .N-highlighted-text {
-    color: #FE6F61;
+    color: #ff6347;
 }
 
 .NavTitle {
     color: white;
-    font-size: 50px;
+    font-size: 40px;
     font-family: 'Kavoon', cursive;
-    margin-bottom: -10px;
+    margin-bottom: -5px;
     margin-top: -5px;
     margin-left : -50px;
 }
 
 .N-invertButton{
-    background-color : #FE6F61;
+    background-color : #ff6347;
     color : white;
-    font-size : 25px;
+    font-size : 20px;
     width : 136px;
-    height : 48px;
+    height : 40px;
     border-radius : 20px;
     text-align : center;
-    font-family: 'Kavoon', cursive;
+    font-family : 'LINE Seed Sans KR';
     margin-right : 9px;
     Justify-content : center;
     padding-top : 5px;
@@ -39,12 +50,12 @@
 .N-myPageButton{
     background-color : #2A2A2A;
     color : white;
-    font-size : 25px;
+    font-size : 20px;
     width : 136px;
-    height : 48px;
+    height : 40px;
     border-radius : 20px;
     text-align : center;
-    font-family : 'Kavoon', cursive;
+    font-family : 'LINE Seed Sans KR';
     margin-left : 9px;
     margin-right : -50px;
     Justify-content : center;
@@ -53,7 +64,7 @@
 
 /* invertButton hover 효과 */
 .N-invertButton:hover {
-    background-color: #FF867B; /* 마우스를 올렸을 때 배경색 변경 */
+    background-color: #ff9d8b; /* 마우스를 올렸을 때 배경색 변경 */
     color: black; /* 텍스트 색상 변경 */
 }
 

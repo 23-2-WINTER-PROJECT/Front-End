@@ -3,6 +3,8 @@ import axios from "axios";
 
 import './Mainpage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Offcanvas, Select } from 'react-bootstrap';
+
 
 import uploadImage from '../image/uploadImage.png';
 import Navigation from '../components/Navigation';
@@ -13,16 +15,50 @@ const invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/inv
 const Mainpage = () => {
     const [invertedImageUrl, setInvertedImageUrl] = useState(null);
     return (
-        <div>
+        <div className = "M-background">
             <Navigation />
-            <Background />
+            <div class="container text-center">
+            <div class="row">
+                <div class="col left">
+                </div>
+                <div class="col mid">
+                <SelectBar/>
+                <br/>
+                <Background />
+                </div>
+                <div class="col right">
+                <ImageControl/>
+                </div>
+            </div>
+            </div>
         </div>
     );
 };
 
+const SelectBar = () => (
+    <select className="form-select" aria-label="Default select example">
+    <option selected>모자이크를 원하는 카테고리를 선택하세요.</option>
+    <option value="1">얼굴</option>
+    <option value="2">자동차 번호판</option>
+    <option value="3">카드번호</option>
+    <option value="4">주소</option>
+    </select>
+);
+
 const Background = () => (
-    <div className="M-background">
+    <div>
         <UploadBox />
+    </div>
+);
+
+const ImageControl = () => (
+    <div>
+        <button className = "download-button">
+            다운로드
+        </button>
+        <button className = "delete-button">
+            삭제
+        </button>
     </div>
 );
 
@@ -127,9 +163,6 @@ const UploadBox = () => {
         });
     };
     
-    
-    
-
     return (
         <div>
             <label
@@ -158,7 +191,7 @@ const UploadBox = () => {
                 </div>
             </label>
             <div className="M-center">
-                <button className="submit-button" onClick={handleApi}>invert</button>
+                <button className="submit-button" onClick={handleApi}>mos-AIc</button>
             </div>
         </div>
 

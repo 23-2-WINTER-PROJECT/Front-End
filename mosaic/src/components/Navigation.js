@@ -7,7 +7,7 @@ const Navigation = () => {
     const navigation = useNavigate();
     const onClickInvert = () => alert("모델을 불러옵니다")
     return(
-        <div>
+        <div className = "nav-header">
             <Navbar className="Navbar">
                 <Container>
                     <Navbar.Brand href="/main">
@@ -17,10 +17,10 @@ const Navigation = () => {
                     </Navbar.Brand>
                     <Nav>
                         <Nav.Link href = "/mypage" style = {{ textDecoration : "none" }} className="N-invertButton">
-                            my page
+                            내 갤러리
                         </Nav.Link>
                         <Nav.Link href = "/login" style = {{ textEdcoration : "none" }} className = "N-myPageButton">
-                            logout
+                            로그아웃
                         </Nav.Link>
                     </Nav>
                 </Container>
