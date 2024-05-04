@@ -54,10 +54,10 @@ const Background = () => (
 const ImageControl = () => (
     <div>
         <button className = "download-button">
-            다운로드
+            download
         </button>
         <button className = "delete-button">
-            삭제
+            delete
         </button>
     </div>
 );

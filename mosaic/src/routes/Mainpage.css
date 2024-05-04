@@ -64,10 +64,10 @@
     background: none;
     color: #fff;
     text-align: center;
-    font-family: 'LINE Seed Sans KR';
+    font-family: 'Kavoon';
     font-size: 20px;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 100;
     line-height: normal;
     transition: background-color 0.3s;
 }

@@ -62,7 +62,7 @@ const Login = () => {
               <br/>
               Mos-<span className="L-highlighted-text">AI</span>c
               </Link>
-              {/* <p className = "Text">이제는 함께하세요</p> */}
+              {/* <p className = "Text">시작해보세요</p> */}
             </div>
           </div>
           <div className = "col main-div">
@@ -101,7 +101,7 @@ const Login = () => {
                   <button className="L-login-Button">로그인</button>
                   {!isCorrect && (
                     <p className="L-noneCorrect">
-                      ID 또는 비밀번호가 맞지 않습니다. 다시 확인해주세요.
+                      ID 또는 비밀번호가 맞지 않습니다.
                     </p>
                   )}
                 </form>
