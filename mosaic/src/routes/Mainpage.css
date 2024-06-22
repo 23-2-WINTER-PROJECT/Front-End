@@ -1,9 +1,10 @@
+/* Mainpage.css */
 @import url('https://fonts.googleapis.com/css2?family=Kavoon&display=swap');
 
 @font-face {
-    font-family : "LINE Seed Sans KR";
-    font-weight : normal;
-    src : url("../image/LINESeedKR-Rg.ttf") format ("truetype");
+    font-family: "LINE Seed Sans KR";
+    font-weight: normal;
+    src: url("../image/LINESeedKR-Rg.ttf") format("truetype");
 }
 
 .M-background {
@@ -15,38 +16,40 @@
     flex-direction: column;
 }
 
-.left{
-
-}
-
-.mid{
-    padding : 20px;
+.mid {
+    padding: 20px;
 }
 
 .right {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; 
+    justify-content: flex-start;
     padding: 20px;
 }
 
-.form-select{
-    font-family: 'LINE Seed Sans KR';
-    font-size : 20px;
+.category-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
+.form-select {
+    font-family: 'LINE Seed Sans KR';
+    font-size: 20px;
+}
 
-.download-button{
+.download-button,
+.submit-button{
     width: 250px;
     height: 50px;
     flex-shrink: 0;
-    border-color : #ff6347;
+    border: 2px solid #ff6347;
     border-radius: 10px;
     background: none;
     color: #fff;
     text-align: center;
-    font-family: 'LINE Seed Sans KR';
     font-size: 20px;
     font-style: normal;
     font-weight: bold;
@@ -54,31 +57,36 @@
     transition: background-color 0.3s;
 }
 
-.delete-button{
-    margin-top : 10px;
-    width: 250px;
+.delete-button {
+    width: 150px;
     height: 50px;
-    flex-shrink: 0;
-    border-color : #ff6347;
-    border-radius: 10px;
-    background: none;
-    color: #fff;
-    text-align: center;
+    font-family: 'LINE Seed Sans KR';
+    font-size : 20px;
+    color : white;
+    background: #1B1B1B;
+    border-radius : 10px;
+    border : 2px solid gray;
+    text-align : center;
+    Justify-content : center;
+}
+
+.submit-button {
     font-family: 'Kavoon';
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 100;
-    line-height: normal;
-    transition: background-color 0.3s;
 }
 
-.download-button:hover{
+.delete-button {
+    font-family: 'LINE Seed Sans KR';
+}
+
+.download-button:hover,
+.submit-button:hover{
     background-color: #ff6347;
 }
 
-.delete-button:hover{
-    background-color: #ff6347;
+.delete-button:hover {
+    background-color: #2A2A2A;
 }
+
 
 .icon {
     width: 100px;
@@ -86,9 +94,9 @@
     pointer-events: none;
 }
 
-.preview.active{
-    background-color : #efeef3;
-    border-color : #111;
+.preview.active {
+    background-color: #efeef3;
+    border-color: #111;
 }
 
 .preview_info {
@@ -101,12 +109,12 @@
     flex-direction: column;
 }
 
-.upload-box{
-    width: 700px;
-    height: 500px;
+.upload-box {
+    width: 900px; /* Increase the width */
+    height: 600px; /* Increase the height */
     border-radius: 10px;
     border: 5px dashed #696969;
-    background-color : #1B1B1B;
+    background-color: #1B1B1B;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -114,9 +122,9 @@
     align-items: center;
     cursor: pointer;
     padding: 70px;
-}  
+}
 
-.drag-file{
+.drag-file {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -127,94 +135,46 @@
     border: 0;
 }
 
-.upload-text{
-    text-Align : center;
-    font-size : 25px;
+.upload-text {
+    text-align: center;
+    font-size: 25px;
     font-family: 'LINE Seed Sans KR', Bold;
-    font-weight : bold;
-    line-height : 15px;
-    margin : 20px 0 10px;
-    color : white;
+    font-weight: bold;
+    line-height: 15px;
+    margin: 20px 0 10px;
+    color: white;
 }
 
-.sub-text{
-    text-Align : center;
-    font-size : 25px;
+.sub-text {
+    text-align: center;
+    font-size: 25px;
     font-family: 'LINE Seed Sans KR', Thin;
-    font-weight : 320;
-    line-height : 15px;
-    margin-top : 10px;
-    color : white;
+    font-weight: 320;
+    line-height: 15px;
+    margin-top: 10px;
+    color: white;
 }
 
-.sub-sub-text{
-    text-Align : center;
-    font-size : 15px;
+.sub-sub-text {
+    text-align: center;
+    font-size: 15px;
     font-family: 'LINE Seed Sans KR', Thin;
-    font-weight : 200;
-    line-height : 15px;
-    color : white;
+    font-weight: 200;
+    line-height: 15px;
+    color: white;
 }
 
-.M-center{
-    text-align : center;
+.M-center {
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.submit-button{
-    width : 350px;
-    height : 70px;
-    border-radius : 15px;
-    font-size : 30px;
-    text-Align : center;
-    background-color : #ff6347;
-    color : white;
-    font-family: 'Kavoon';
-    Justify-content : center;
-    margin-top : 50px;
-    padding-top : 10px;
-}
-
-.submit-button:hover{
-background-color: #555;
-}
-/* 
-.upload-image{
-    width : 126px;
-    text-align : center;
-}
-
-.file {
-    display: none;
-}
-
-.file::file-selector-button {
-    font-size: 14px;
-    background: #fff;
-    border: 1px solid #111;
-    border-radius: 12px;
-    padding: 4px 32px;
-    cursor: pointer;
-}
-
-.preview {
-    width: 300px;
-    height: 150px;
-    margin: auto;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 3px dashed #eee;
-    padding: 70px;
+.button-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+    justify-content: center; /* Center horizontally */
+    gap: 10px; /* Add space between the buttons */
+    margin-top: 10px; /* Optional: add some top margin for spacing */
 }
-
-.preview:hover {
-    border-color: #111;
-} */

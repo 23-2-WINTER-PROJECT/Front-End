@@ -5,60 +5,68 @@ import './Mainpage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Offcanvas, Select } from 'react-bootstrap';
 
-
 import uploadImage from '../image/uploadImage.png';
 import Navigation from '../components/Navigation';
 
 const uploadURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/upload";
-const invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/invert";
+let invertURL = ""; // API URL을 카테고리에 따라 설정하기 위해 공백으로 남겨둠
 
 const Mainpage = () => {
     const [invertedImageUrl, setInvertedImageUrl] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(""); // 카테고리 상태 추가
+    const [uploadedInfo, setUploadedInfo] = useState(null); // 업로드된 이미지 정보 상태 추가
+
+    // 카테고리 선택 핸들러
+    const handleSelectCategory = (event) => {
+        setSelectedCategory(event.target.value);
+    };
+
+    // 이미지 삭제 핸들러
+    const handleDeleteImage = () => {
+        setUploadedInfo(null);
+        setInvertedImageUrl(null);
+    };
+
     return (
-        <div className = "M-background">
+        <div className="M-background">
             <Navigation />
-            <div class="container text-center">
-            <div class="row">
-                <div class="col left">
+            <div className="container text-center">
+                <div className="row">
+                    <div className="col left"></div>
+                    <div className="col mid">
+                        <div className="category-section">
+                            <SelectBar onSelectCategory={handleSelectCategory} />
+                            <button className="delete-button" onClick={handleDeleteImage}>사진 변경</button>
+                        </div>
+                        <br />
+                        <Background selectedCategory={selectedCategory} invertedImageUrl={invertedImageUrl} setInvertedImageUrl={setInvertedImageUrl} uploadedInfo={uploadedInfo} setUploadedInfo={setUploadedInfo} />
+                    </div>
+                    <div className="col right"></div>
                 </div>
-                <div class="col mid">
-                <SelectBar/>
-                <br/>
-                <Background />
-                </div>
-                <div class="col right">
-                <ImageControl/>
-                </div>
-            </div>
             </div>
         </div>
     );
 };
 
-const SelectBar = () => (
-    <select className="form-select" aria-label="Default select example">
-    <option selected>모자이크를 원하는 카테고리를 선택하세요.</option>
-    <option value="1">얼굴</option>
-    <option value="2">자동차 번호판</option>
-    <option value="3">카드번호</option>
-    <option value="4">주소</option>
+const SelectBar = ({ onSelectCategory }) => (
+    <select className="form-select" aria-label="Default select example" onChange={onSelectCategory}>
+        <option value="">모자이크를 원하는 카테고리를 선택하세요.</option>
+        <option value="face">얼굴</option>
+        <option value="license_plate">자동차 번호판</option>
+        <option value="card_number">카드번호</option>
+        <option value="address">주소</option>
     </select>
 );
 
-const Background = () => (
+const Background = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, uploadedInfo, setUploadedInfo }) => (
     <div>
-        <UploadBox />
+        <UploadBox selectedCategory={selectedCategory} invertedImageUrl={invertedImageUrl} setInvertedImageUrl={setInvertedImageUrl} uploadedInfo={uploadedInfo} setUploadedInfo={setUploadedInfo} />
     </div>
 );
 
 const ImageControl = () => (
     <div>
-        <button className = "download-button">
-            download
-        </button>
-        <button className = "delete-button">
-            delete
-        </button>
+        <button className="download-button">download</button>
     </div>
 );
 
@@ -84,12 +92,9 @@ const FileInfo = ({ uploadedInfo, invertedImageUrl }) => {
     );
 };
 
-
-const UploadBox = () => {
-    const [uploadedInfo, setUploadedInfo] = useState(null);
+const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, uploadedInfo, setUploadedInfo }) => {
     const [isActive, setActive] = useState(false);
     const [photoId, setPhotoId] = useState(null);
-    const [invertedImageUrl, setInvertedImageUrl] = useState(null);
 
     const handleDragStart = () => setActive(true);
     const handleDragEnd = () => setActive(false);
@@ -103,7 +108,7 @@ const UploadBox = () => {
         setActive(false);
     
         const file = event.dataTransfer.files[0];
-        setFileInfo(file); 
+        setFileInfo(file);
     };
 
     const setFileInfo = (file) => {
@@ -142,13 +147,31 @@ const UploadBox = () => {
         }
     };
 
-
     const handleApi = () => {
         if (!photoId) {
             alert('이미지를 업로드해주세요.');
             return;
         }
-    
+
+        // 카테고리에 따라 API URL 설정
+        switch (selectedCategory) {
+            case "face":
+                invertURL = ""; // 얼굴 모자이크 API URL
+                break;
+            case "license_plate":
+                invertURL = ""; // 자동차 번호판 모자이크 API URL
+                break;
+            case "card_number":
+                invertURL = ""; // 카드번호 모자이크 API URL
+                break;
+            case "address":
+                invertURL = ""; // 주소 모자이크 API URL
+                break;
+            default:
+                alert('카테고리를 선택해주세요.');
+                return;
+        }
+
         axios.post(invertURL, { photo_id: photoId }).then((res) => {
             console.log(res);
             const { detect, imgsrc } = res.data;
@@ -161,6 +184,15 @@ const UploadBox = () => {
         }).catch((error) => {
             console.error('Error inverting image:', error);
         });
+    };
+
+    const handleDownload = () => {
+        if (uploadedInfo && uploadedInfo.imageUrl) {
+            const link = document.createElement('a');
+            link.href = uploadedInfo.imageUrl;
+            link.download = uploadedInfo.name || 'downloaded_image';
+            link.click();
+        }
     };
     
     return (
@@ -177,7 +209,7 @@ const UploadBox = () => {
                         type="file"
                         name="file"
                         className="drag-file"
-                        onChange={handleUpload}                    
+                        onChange={handleUpload}
                     />
                     <FileInfo uploadedInfo={uploadedInfo} invertedImageUrl={invertedImageUrl} />
                     {!uploadedInfo && (
@@ -190,12 +222,12 @@ const UploadBox = () => {
                     )}
                 </div>
             </label>
-            <div className="M-center">
+            <div className="button-container">
                 <button className="submit-button" onClick={handleApi}>mos-AIc</button>
+                <button className="download-button" onClick={handleDownload}>다운로드</button>
             </div>
         </div>
-
     );
-}
+};
 
 export default Mainpage;
