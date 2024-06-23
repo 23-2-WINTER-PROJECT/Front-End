@@ -41,7 +41,8 @@
 }
 
 .download-button,
-.submit-button{
+.submit-button,
+.model-train-button { /* 모델 학습 버튼 추가 */
     width: 250px;
     height: 50px;
     flex-shrink: 0;
@@ -61,13 +62,13 @@
     width: 150px;
     height: 50px;
     font-family: 'LINE Seed Sans KR';
-    font-size : 20px;
-    color : white;
+    font-size: 20px;
+    color: white;
     background: #1B1B1B;
-    border-radius : 10px;
-    border : 2px solid gray;
-    text-align : center;
-    Justify-content : center;
+    border-radius: 10px;
+    border: 2px solid gray;
+    text-align: center;
+    justify-content: center;
 }
 
 .submit-button {
@@ -79,14 +80,14 @@
 }
 
 .download-button:hover,
-.submit-button:hover{
+.submit-button:hover,
+.model-train-button:hover { /* 모델 학습 버튼 호버 효과 추가 */
     background-color: #ff6347;
 }
 
 .delete-button:hover {
     background-color: #2A2A2A;
 }
-
 
 .icon {
     width: 100px;
@@ -177,4 +178,68 @@
     justify-content: center; /* Center horizontally */
     gap: 10px; /* Add space between the buttons */
     margin-top: 10px; /* Optional: add some top margin for spacing */
+}
+
+/* 로딩 모달 스타일 */
+.loading-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #333; /* 텍스트 색상 */
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3em;
+}
+
+/* 모델 학습 모달 스타일 */
+.modal-content {
+    background-color: #2A2A2A; /* 모달 배경 색상 */
+    color: white; /* 텍스트 색상 */
+    border-radius: 10px;
+}
+
+.modal-header, .modal-body {
+    border: none; /* 기본 경계선 제거 */
+}
+
+.modal-title {
+    font-family: 'LINE Seed Sans KR';
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    border-top: none; /* 모달 푸터의 기본 경계선 제거 */
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* 모달 학습 시작 버튼 스타일 */
+.modal-train-button-container {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center;
+    margin-top: 20px; /* 버튼 위에 약간의 공간 추가 */
+}
+
+.modal-train-button {
+    background-color: #ff6347; 
+    color: #fff; 
+    border: none;
+    font-weight: bold;
+    padding: 10px 30px;
+    border-radius: 5px; 
+    transition: background-color 0.3s;
+}
+
+.modal-train-button:hover {
+    background-color: #a54b3c; /* 호버 시 색상 */
 }

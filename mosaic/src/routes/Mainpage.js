@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-
 import './Mainpage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Offcanvas, Select } from 'react-bootstrap';
+import { Button, Modal, Form } from 'react-bootstrap';
 
 import uploadImage from '../image/uploadImage.png';
 import Navigation from '../components/Navigation';
@@ -15,6 +14,11 @@ const Mainpage = () => {
     const [invertedImageUrl, setInvertedImageUrl] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(""); // 카테고리 상태 추가
     const [uploadedInfo, setUploadedInfo] = useState(null); // 업로드된 이미지 정보 상태 추가
+    const [customCategories, setCustomCategories] = useState([]); // 사용자 정의 카테고리 상태
+    const [showTrainModal, setShowTrainModal] = useState(false); // 모델 학습 모달 상태
+    const [trainingCategory, setTrainingCategory] = useState(""); // 모델 학습 카테고리 이름
+    const [trainingImage, setTrainingImage] = useState(null); // 모델 학습 이미지 파일
+    const [showLoadingModal, setShowLoadingModal] = useState(false); // 로딩 모달 상태
 
     // 카테고리 선택 핸들러
     const handleSelectCategory = (event) => {
@@ -27,6 +31,56 @@ const Mainpage = () => {
         setInvertedImageUrl(null);
     };
 
+    // 모델 학습 모달 열기
+    const handleOpenTrainModal = () => setShowTrainModal(true);
+    // 모델 학습 모달 닫기
+    const handleCloseTrainModal = () => setShowTrainModal(false);
+
+    // 모델 학습 카테고리 입력 핸들러
+    const handleTrainingCategoryChange = (event) => {
+        setTrainingCategory(event.target.value);
+    };
+
+    // 모델 학습 이미지 업로드 핸들러
+    const handleTrainingImageUpload = (event) => {
+        const file = event.target.files[0];
+        setTrainingImage(file);
+    };
+
+    // 모델 학습 시작 핸들러
+    const handleStartTraining = async () => {
+        if (!trainingCategory || !trainingImage) {
+            alert('카테고리 이름과 이미지를 입력해주세요.');
+            return;
+        }
+
+        setShowLoadingModal(true);
+        setShowTrainModal(false);
+
+        try {
+            const formData = new FormData();
+            formData.append('category', trainingCategory);
+            formData.append('file', trainingImage);
+
+            const response = await axios.post('https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/train', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            console.log('Training completed:', response.data);
+
+            // 모델 학습 완료 후 사용자 정의 카테고리 추가
+            setTimeout(() => {
+                setCustomCategories((prevCategories) => [...prevCategories, trainingCategory]);
+                setShowLoadingModal(false); // 로딩 모달 닫기
+            }, 7000); // 로딩 모달을 7초 동안 표시
+        } catch (error) {
+            console.error('Error during training:', error);
+            setShowLoadingModal(false);
+        }
+    };
+
     return (
         <div className="M-background">
             <Navigation />
@@ -35,32 +89,97 @@ const Mainpage = () => {
                     <div className="col left"></div>
                     <div className="col mid">
                         <div className="category-section">
-                            <SelectBar onSelectCategory={handleSelectCategory} />
-                            <button className="delete-button" onClick={handleDeleteImage}>사진 변경</button>
+                            <SelectBar 
+                                onSelectCategory={handleSelectCategory} 
+                                customCategories={customCategories} // 사용자 정의 카테고리 전달
+                            />
+                            <button className="model-train-button" onClick={handleOpenTrainModal}>모델 학습</button>
                         </div>
                         <br />
-                        <Background selectedCategory={selectedCategory} invertedImageUrl={invertedImageUrl} setInvertedImageUrl={setInvertedImageUrl} uploadedInfo={uploadedInfo} setUploadedInfo={setUploadedInfo} />
+                        <Background 
+                            selectedCategory={selectedCategory} 
+                            invertedImageUrl={invertedImageUrl} 
+                            setInvertedImageUrl={setInvertedImageUrl} 
+                            uploadedInfo={uploadedInfo} 
+                            setUploadedInfo={setUploadedInfo} 
+                            onDeleteImage={handleDeleteImage} // 이미지 삭제 핸들러 전달
+                        />
                     </div>
                     <div className="col right"></div>
                 </div>
             </div>
+
+            {/* 모델 학습 모달 */}
+            <Modal show={showTrainModal} onHide={handleCloseTrainModal} className="custom-modal">
+                <Modal.Header closeButton>
+                    <Modal.Title>모델 학습</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>카테고리 이름</Form.Label>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="카테고리 이름을 입력하세요" 
+                                value={trainingCategory}
+                                onChange={handleTrainingCategoryChange}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>학습할 이미지 업로드</Form.Label>
+                            <Form.Control 
+                                type="file" 
+                                accept="image/*" 
+                                onChange={handleTrainingImageUpload}
+                            />
+                        </Form.Group>
+                        <div className="modal-train-button-container">
+                            <Button className="modal-train-button" onClick={handleStartTraining}>
+                                학습 시작
+                            </Button>
+                        </div>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            {/* 로딩 모달 */}
+            <Modal show={showLoadingModal} centered className="custom-modal">
+                <Modal.Body>
+                    <div className="loading-modal-content">
+                        <p>모델이 학습 중입니다...</p>
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </div>
     );
 };
 
-const SelectBar = ({ onSelectCategory }) => (
+const SelectBar = ({ onSelectCategory, customCategories }) => (
     <select className="form-select" aria-label="Default select example" onChange={onSelectCategory}>
         <option value="">모자이크를 원하는 카테고리를 선택하세요.</option>
         <option value="face">얼굴</option>
         <option value="license_plate">자동차 번호판</option>
         <option value="card_number">카드번호</option>
         <option value="address">주소</option>
+        {customCategories.map((category, index) => (
+            <option key={index} value={category}>{category}</option>
+        ))}
     </select>
 );
 
-const Background = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, uploadedInfo, setUploadedInfo }) => (
+const Background = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, uploadedInfo, setUploadedInfo, onDeleteImage }) => (
     <div>
-        <UploadBox selectedCategory={selectedCategory} invertedImageUrl={invertedImageUrl} setInvertedImageUrl={setInvertedImageUrl} uploadedInfo={uploadedInfo} setUploadedInfo={setUploadedInfo} />
+        <UploadBox 
+            selectedCategory={selectedCategory} 
+            invertedImageUrl={invertedImageUrl} 
+            setInvertedImageUrl={setInvertedImageUrl} 
+            uploadedInfo={uploadedInfo} 
+            setUploadedInfo={setUploadedInfo} 
+            onDeleteImage={onDeleteImage} // 이미지 삭제 핸들러 전달
+        />
     </div>
 );
 
@@ -92,7 +211,7 @@ const FileInfo = ({ uploadedInfo, invertedImageUrl }) => {
     );
 };
 
-const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, uploadedInfo, setUploadedInfo }) => {
+const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, uploadedInfo, setUploadedInfo, onDeleteImage }) => {
     const [isActive, setActive] = useState(false);
     const [photoId, setPhotoId] = useState(null);
 
@@ -106,7 +225,7 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
     const handleDrop = (event) => {
         event.preventDefault();
         setActive(false);
-    
+
         const file = event.dataTransfer.files[0];
         setFileInfo(file);
     };
@@ -115,7 +234,7 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
         const { name, type } = file;
         const isImage = type.startsWith('image/');
         const size = (file.size / (1024 * 1024)).toFixed(2) + 'MB';
-    
+
         if (!isImage) {
             setUploadedInfo({ name, size, type });
             return;
@@ -156,45 +275,54 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
         // 카테고리에 따라 API URL 설정
         switch (selectedCategory) {
             case "face":
-                invertURL = ""; // 얼굴 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/face-mosaic"; // 얼굴 모자이크 API URL
                 break;
             case "license_plate":
-                invertURL = ""; // 자동차 번호판 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/license-plate-mosaic"; // 자동차 번호판 모자이크 API URL
                 break;
             case "card_number":
-                invertURL = ""; // 카드번호 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/card-number-mosaic"; // 카드번호 모자이크 API URL
                 break;
             case "address":
-                invertURL = ""; // 주소 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/address-mosaic"; // 주소 모자이크 API URL
                 break;
             default:
                 alert('카테고리를 선택해주세요.');
                 return;
         }
 
-        axios.post(invertURL, { photo_id: photoId }).then((res) => {
-            console.log(res);
-            const { detect, imgsrc } = res.data;
-            if (detect) {
-                const fullImageUrl = `https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/${imgsrc}`;
-                setInvertedImageUrl(fullImageUrl); // 반전된 이미지 URL 설정
-            } else {
-                alert('다른 이미지를 선택해주세요.');
-            }
-        }).catch((error) => {
-            console.error('Error inverting image:', error);
-        });
+        axios.post(invertURL, { photo_id: photoId })
+            .then((res) => {
+                console.log(res);
+                const { detect, imgsrc } = res.data;
+                if (detect) {
+                    const fullImageUrl = `https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/${imgsrc}`;
+                    setInvertedImageUrl(fullImageUrl); // 반전된 이미지 URL 설정
+                } else {
+                    alert('다른 이미지를 선택해주세요.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error inverting image:', error);
+            });
     };
 
     const handleDownload = () => {
-        if (uploadedInfo && uploadedInfo.imageUrl) {
+        if (invertedImageUrl) {
+            // Download the modified image from the backend
+            const link = document.createElement('a');
+            link.href = invertedImageUrl;
+            link.download = 'mos-AIc_processed_image';
+            link.click();
+        } else if (uploadedInfo && uploadedInfo.imageUrl) {
+            // Download the original uploaded image
             const link = document.createElement('a');
             link.href = uploadedInfo.imageUrl;
-            link.download = uploadedInfo.name || 'downloaded_image';
+            link.download = uploadedInfo.name || 'uploaded_image';
             link.click();
         }
     };
-    
+
     return (
         <div>
             <label
@@ -225,6 +353,7 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
             <div className="button-container">
                 <button className="submit-button" onClick={handleApi}>mos-AIc</button>
                 <button className="download-button" onClick={handleDownload}>다운로드</button>
+                <button className="delete-button" onClick={onDeleteImage}>사진 변경</button>
             </div>
         </div>
     );
