@@ -69,7 +69,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 30px;
+  gap: 15px;
   justify-content: center;
 }
 
@@ -86,7 +86,7 @@
 
 /* 이미지 스타일 */
 .image-container img {
-  width: 150%;
+  width: 100%;
   border-radius: 8px;
   transition: transform 1s ease-in-out;
 }
