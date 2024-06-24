@@ -108,17 +108,17 @@ const Gallery = () => {
         <div className="gallery">
             {Array.isArray(photos) && photos.length > 0 ? (
                 photos.map(photo => (
-                    <div key={photo.id} className="photo-container" onClick={() => handlePreview(photo.url)}>
+                    <div key={photo} className="photo-container" onClick={() => handlePreview(photo)}>
                         <img 
-                            src={photo.url} // API 응답의 URL 그대로 사용
+                            src={photo} // API 응답의 URL 그대로 사용
                             alt="Mosaic" 
                             className="photo" 
                             onError={(e) => {
                                 e.target.src = '/fallback-image.png'; // 이미지 로드 실패 시 대체 이미지 표시
-                                console.error("이미지 로드 실패:", photo.url);
+                                console.error("이미지 로드 실패:", photo);
                             }}
                         />
-                        <button onClick={(e) => { e.stopPropagation(); handleDelete(photo.id); }} className="M-delete-button">삭제</button>
+                        <button onClick={(e) => { e.stopPropagation(); handleDelete(photo); }} className="M-delete-button">삭제</button>
                     </div>
                 ))
             ) : (
