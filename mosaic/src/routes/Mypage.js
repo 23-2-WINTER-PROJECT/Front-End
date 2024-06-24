@@ -23,15 +23,19 @@ const Profile = () => {
     const [userId, setUserId] = useState("");
 
     useEffect(() => {
-        // 예시: 사용자의 ID를 가져오는 API 호출
+        // 사용자 ID를 가져오는 API 호출
         const fetchUserId = async () => {
             try {
-                const response = await axios.get(`https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/user_info`, {
+                const response = await axios.get(`https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/users_list`, {
                     withCredentials: true // 쿠키를 포함하여 요청
                 });
+
+                // 콘솔에 전체 응답 로그
+                console.log("API 응답 (User ID):", response);
+
                 // 사용자의 ID를 설정 (실제 데이터에 따라 조정 필요)
-                if (response.data && response.data.userId) {
-                    setUserId(response.data.userId);
+                if (response.data && response.data.uid) {
+                    setUserId(response.data.uid);
                 } else {
                     console.error("Unexpected response format:", response.data);
                 }
@@ -53,25 +57,21 @@ const Profile = () => {
 const Gallery = () => {
     const [photos, setPhotos] = useState([]); // 초기 상태를 빈 배열로 설정
     const [previewUrl, setPreviewUrl] = useState(null); // 미리보기 URL 상태 추가
-    const userId = "current_user_id"; // 사용자 ID를 실제로 동적으로 가져오는 로직으로 교체해야 함
 
     useEffect(() => {
         // 사용자의 사진 목록을 가져오는 API 호출
         const fetchPhotos = async () => {
             try {
                 const response = await axios.get(`https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/users_list`, {
-                    params: { userId },
                     withCredentials: true // 쿠키를 포함하여 요청
                 });
-                
+
+                // 콘솔에 전체 응답 로그
+                console.log("API 응답 (Photos):", response);
+
                 // 서버로부터 받은 데이터를 적절히 처리
                 if (response.data && Array.isArray(response.data.post_list)) {
-                    // URL이 상대경로인 경우 절대경로로 변환 (필요시 수정)
-                    const absoluteUrls = response.data.post_list.map(photo => ({
-                        ...photo,
-                        url: photo.url.startsWith('http') ? photo.url : `https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app${photo.url}`
-                    }));
-                    setPhotos(absoluteUrls);
+                    setPhotos(response.data.post_list); // 받은 데이터 그대로 사용
                 } else {
                     console.error("Unexpected response format:", response.data);
                 }
@@ -81,7 +81,7 @@ const Gallery = () => {
         };
 
         fetchPhotos();
-    }, [userId]);
+    }, []);
 
     const handleDelete = async (photoId) => {
         // 사진 삭제를 처리하는 API 호출
@@ -110,10 +110,13 @@ const Gallery = () => {
                 photos.map(photo => (
                     <div key={photo.id} className="photo-container" onClick={() => handlePreview(photo.url)}>
                         <img 
-                            src={photo.url} 
+                            src={photo.url} // API 응답의 URL 그대로 사용
                             alt="Mosaic" 
                             className="photo" 
-                            onError={(e) => e.target.src = '/fallback-image.png'} // 이미지 로드 실패 시 대체 이미지 표시
+                            onError={(e) => {
+                                e.target.src = '/fallback-image.png'; // 이미지 로드 실패 시 대체 이미지 표시
+                                console.error("이미지 로드 실패:", photo.url);
+                            }}
                         />
                         <button onClick={(e) => { e.stopPropagation(); handleDelete(photo.id); }} className="M-delete-button">삭제</button>
                     </div>
