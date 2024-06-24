@@ -17,7 +17,7 @@ const Mainpage = () => {
     const [customCategories, setCustomCategories] = useState([]); // 사용자 정의 카테고리 상태
     const [showTrainModal, setShowTrainModal] = useState(false); // 모델 학습 모달 상태
     const [trainingCategory, setTrainingCategory] = useState(""); // 모델 학습 카테고리 이름
-    const [trainingImage, setTrainingImage] = useState(null); // 모델 학습 이미지 파일
+    const [trainingImages, setTrainingImages] = useState([]); // 모델 학습 이미지 파일 배열
     const [showLoadingModal, setShowLoadingModal] = useState(false); // 로딩 모달 상태
 
     // 카테고리 선택 핸들러
@@ -41,10 +41,10 @@ const Mainpage = () => {
         setTrainingCategory(event.target.value);
     };
 
-    // 모델 학습 이미지 업로드 핸들러
+    // 모델 학습 이미지 업로드 핸들러 (다중 이미지)
     const handleTrainingImageUpload = (event) => {
-        const file = event.target.files[0];
-        setTrainingImage(file);
+        const files = Array.from(event.target.files);
+        setTrainingImages(files);
     };
 
     // 모델 학습 시작 핸들러
@@ -56,15 +56,20 @@ const Mainpage = () => {
 
         // 사용자 정의 카테고리 추가
         setCustomCategories((prevCategories) => {
-            // 중복된 카테고리명이 있는지 확인
             if (!prevCategories.includes(trainingCategory)) {
                 console.log("Adding new category:", trainingCategory); // 확인을 위한 콘솔 로그
                 return [...prevCategories, trainingCategory];
             }
-            return prevCategories; // 중복이 있다면 이전 카테고리 그대로 반환
+            return prevCategories;
         });
 
-        setShowTrainModal(false);
+        setShowTrainModal(false); // 모델 학습 모달 닫기
+        setShowLoadingModal(true); // 로딩 모달 열기
+
+        // 3초 후에 로딩 모달 닫기 (예제 시간, 필요에 따라 조정 가능)
+        setTimeout(() => {
+            setShowLoadingModal(false);
+        }, 3000);
     };
 
     // 상태 변화 감지 및 콘솔 로그 추가
@@ -121,9 +126,15 @@ const Mainpage = () => {
                             <Form.Control 
                                 type="file" 
                                 accept="image/*" 
+                                multiple // 다중 이미지 업로드 가능
                                 onChange={handleTrainingImageUpload}
                             />
                         </Form.Group>
+                        {trainingImages.length > 0 && (
+                            <div className="image-list">
+                                <p>{trainingImages.length}개의 이미지가 선택되었습니다.</p>
+                            </div>
+                        )}
                         <div className="modal-train-button-container">
                             <Button className="modal-train-button" onClick={handleStartTraining}>
                                 학습 시작
@@ -136,7 +147,7 @@ const Mainpage = () => {
             {/* 로딩 모달 */}
             <Modal show={showLoadingModal} centered className="custom-modal">
                 <Modal.Body>
-                    <div className="loading-modal-content">
+                    <div className="loading-modal-content text-center">
                         <p>모델이 학습 중입니다...</p>
                         <div className="spinner-border" role="status">
                             <span className="visually-hidden">Loading...</span>

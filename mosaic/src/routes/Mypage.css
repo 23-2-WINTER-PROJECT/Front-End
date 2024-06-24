@@ -1,23 +1,32 @@
+/* Custom font import */
 @font-face {
-    font-family : "LINE Seed Sans KR";
-    font-weight : normal;
-    src : url("../image/LINESeedKR-Rg.ttf") format ("truetype");
+    font-family: "LINE Seed Sans KR";
+    font-weight: normal;
+    src: url("../image/LINESeedKR-Rg.ttf") format("truetype");
 }
 
-.MY-text{
-    text-Align : center;
-    font-size : 30px;
-    font-family: 'LINE Seed Sans KR', Bold;
-    font-weight : 100px;
-    color : white;
+/* Profile text styling */
+.MY-text {
+    text-align: center;
+    font-size: 30px;
+    font-family: 'LINE Seed Sans KR', sans-serif; /* Use the custom font */
+    font-weight: 400; /* Normal font weight */
+    color: white;
+    margin-bottom: 40px; /* Add some space below the profile text */
 }
 
-/* Mypage.css */
-
-.M-background {
+/* Background styling for the Mypage */
+.My-background {
     background-color: #1B1B1B;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; /* Add padding for better spacing */
 }
+
+/* Gallery styling */
 .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -25,16 +34,45 @@
     justify-content: center;
 }
 
+/* Each photo container styling */
 .photo-container {
     position: relative;
     width: 200px;
     height: 200px;
     overflow: hidden;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow for better appearance */
 }
 
+/* Photo styling */
 .photo {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+    transition: transform 0.3s ease; /* Smooth scale transition */
+}
+
+/* Scale effect on hover */
+.photo-container:hover .photo {
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+/* Delete button styling */
+.M-delete-button {
+    width: 80px;
+    height: 40px;
+    font-family: 'LINE Seed Sans KR';
+    font-size: 15px;
+    color: white;
+    background: #1B1B1B;
+    border-radius: 10px;
+    border: 2px solid gray;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Change button background on hover */
+.M-delete-button:hover {
+    background-color: #2A2A2A;
 }
