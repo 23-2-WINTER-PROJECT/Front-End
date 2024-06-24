@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './Mainpage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -62,7 +62,8 @@ const Mainpage = () => {
             formData.append('category', trainingCategory);
             formData.append('file', trainingImage);
 
-            const response = await axios.post('https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/train', formData, {
+            const response = await axios.post('https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/train', formData,  {
+                withCredentials:true,
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -72,14 +73,26 @@ const Mainpage = () => {
 
             // 모델 학습 완료 후 사용자 정의 카테고리 추가
             setTimeout(() => {
-                setCustomCategories((prevCategories) => [...prevCategories, trainingCategory]);
+                setCustomCategories((prevCategories) => {
+                    // 중복된 카테고리명이 있는지 확인
+                    if (!prevCategories.includes(trainingCategory)) {
+                        console.log("Adding new category:", trainingCategory); // 확인을 위한 콘솔 로그
+                        return [...prevCategories, trainingCategory];
+                    }
+                    return prevCategories; // 중복이 있다면 이전 카테고리 그대로 반환
+                });
                 setShowLoadingModal(false); // 로딩 모달 닫기
-            }, 7000); // 로딩 모달을 7초 동안 표시
+            }, 15000); // 로딩 모달을 15초 동안 표시
         } catch (error) {
             console.error('Error during training:', error);
             setShowLoadingModal(false);
         }
     };
+
+    // 상태 변화 감지 및 콘솔 로그 추가
+    useEffect(() => {
+        console.log("Updated customCategories:", customCategories);
+    }, [customCategories]);
 
     return (
         <div className="M-background">
@@ -157,18 +170,21 @@ const Mainpage = () => {
     );
 };
 
-const SelectBar = ({ onSelectCategory, customCategories }) => (
-    <select className="form-select" aria-label="Default select example" onChange={onSelectCategory}>
-        <option value="">모자이크를 원하는 카테고리를 선택하세요.</option>
-        <option value="face">얼굴</option>
-        <option value="license_plate">자동차 번호판</option>
-        <option value="card_number">카드번호</option>
-        <option value="address">주소</option>
-        {customCategories.map((category, index) => (
-            <option key={index} value={category}>{category}</option>
-        ))}
-    </select>
-);
+const SelectBar = ({ onSelectCategory, customCategories }) => {
+    console.log("Current customCategories:", customCategories); // 확인을 위한 콘솔 로그
+    return (
+        <select className="form-select" aria-label="Default select example" onChange={onSelectCategory}>
+            <option value="">모자이크를 원하는 카테고리를 선택하세요.</option>
+            <option value="face">얼굴</option>
+            <option value="license_plate">자동차 번호판</option>
+            <option value="card_number">카드번호</option>
+            <option value="address">주소</option>
+            {customCategories.map((category, index) => (
+                <option key={index} value={category}>{category}</option>
+            ))}
+        </select>
+    );
+};
 
 const Background = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, uploadedInfo, setUploadedInfo, onDeleteImage }) => (
     <div>
@@ -279,21 +295,20 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
                 invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/invert"; // 얼굴 모자이크 API URL
                 break;
             case "license_plate":
-                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/license-plate-mosaic"; // 자동차 번호판 모자이크 API URL
+                invertURL = ""; // 자동차 번호판 모자이크 API URL
                 break;
             case "card_number":
-                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/card-number-mosaic"; // 카드번호 모자이크 API URL
+                invertURL = ""; // 카드번호 모자이크 API URL
                 break;
             case "address":
-                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/address-mosaic"; // 주소 모자이크 API URL
+                invertURL = ""; // 주소 모자이크 API URL
                 break;
             default:
                 alert('카테고리를 선택해주세요.');
                 return;
         }
 
-        axios.post(invertURL, { photo_id: photoId }, {withCredentials:true})
-            .then((res) => {
+        axios.post(invertURL, { photo_id: photoId }, {withCredentials : true}).then((res) => {
                 console.log(res);
                 const { detect, imgsrc } = res.data;
                 if (detect) {
@@ -328,7 +343,7 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
                 console.error('Error downloading the processed image:', error);
             }
         } else {
-            alert('다운로드할 모자이크된 이미지가 없습니다.');
+            alert('모자이크 처리 후 클릭 해주세요');
         }
     };
     
