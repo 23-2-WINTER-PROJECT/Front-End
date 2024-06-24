@@ -48,45 +48,23 @@ const Mainpage = () => {
     };
 
     // 모델 학습 시작 핸들러
-    const handleStartTraining = async () => {
-        if (!trainingCategory || !trainingImage) {
-            alert('카테고리 이름과 이미지를 입력해주세요.');
+    const handleStartTraining = () => {
+        if (!trainingCategory) {
+            alert('카테고리 이름을 입력해주세요.');
             return;
         }
 
-        setShowLoadingModal(true);
+        // 사용자 정의 카테고리 추가
+        setCustomCategories((prevCategories) => {
+            // 중복된 카테고리명이 있는지 확인
+            if (!prevCategories.includes(trainingCategory)) {
+                console.log("Adding new category:", trainingCategory); // 확인을 위한 콘솔 로그
+                return [...prevCategories, trainingCategory];
+            }
+            return prevCategories; // 중복이 있다면 이전 카테고리 그대로 반환
+        });
+
         setShowTrainModal(false);
-
-        try {
-            const formData = new FormData();
-            formData.append('category', trainingCategory);
-            formData.append('file', trainingImage);
-
-            const response = await axios.post('https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/train', formData,  {
-                withCredentials:true,
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-
-            console.log('Training completed:', response.data);
-
-            // 모델 학습 완료 후 사용자 정의 카테고리 추가
-            setTimeout(() => {
-                setCustomCategories((prevCategories) => {
-                    // 중복된 카테고리명이 있는지 확인
-                    if (!prevCategories.includes(trainingCategory)) {
-                        console.log("Adding new category:", trainingCategory); // 확인을 위한 콘솔 로그
-                        return [...prevCategories, trainingCategory];
-                    }
-                    return prevCategories; // 중복이 있다면 이전 카테고리 그대로 반환
-                });
-                setShowLoadingModal(false); // 로딩 모달 닫기
-            }, 15000); // 로딩 모달을 15초 동안 표시
-        } catch (error) {
-            console.error('Error during training:', error);
-            setShowLoadingModal(false);
-        }
     };
 
     // 상태 변화 감지 및 콘솔 로그 추가

@@ -35,7 +35,7 @@ const Login = () => {
         pw: password,
       };
 
-      const response = await axios.post(loginURL, formData);
+      const response = await axios.post(loginURL, formData, { withCredentials: true });
       if (response.data === true) {
         navigate("/main");
       } else {
