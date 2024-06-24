@@ -144,7 +144,6 @@ const Mainpage = () => {
                 </Modal.Body>
             </Modal>
 
-            {/* 로딩 모달 */}
             <Modal show={showLoadingModal} centered className="custom-modal">
                 <Modal.Body>
                     <div className="loading-modal-content text-center">

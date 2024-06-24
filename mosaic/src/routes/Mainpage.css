@@ -263,3 +263,44 @@
 .modal-train-button:hover {
     background-color: #a54b3c; /* 호버 시 색상 */
 }
+
+/* 로딩 모달 스타일 */
+.loading-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: #ffffff; /* 텍스트 색상 */
+    font-family: 'LINE Seed Sans KR', sans-serif; /* 커스텀 폰트 적용 */
+    font-size: 18px; /* 폰트 크기 */
+    background-color: #1B1B1B; /* 모달 배경 색상 */
+    border-radius: 10px; /* 모달 둥근 모서리 */
+    padding: 20px; /* 모달 내 패딩 */
+}
+
+/* 스피너 스타일 */
+.spinner-border {
+    width: 3rem; /* 스피너 크기 */
+    height: 3rem; /* 스피너 크기 */
+    border-width: 0.3em; /* 스피너 두께 */
+    color: #ff6347; /* 스피너 색상 */
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px; /* 모달 높이 */
+    background-color: #1B1B1B; /* 모달 배경 색상 */
+    color: white; /* 텍스트 색상 */
+    border-radius: 10px; /* 모달 둥근 모서리 */
+}
+
+/* 모달 내부 텍스트 스타일 */
+.modal-body p {
+    font-family: 'LINE Seed Sans KR', sans-serif; /* 커스텀 폰트 적용 */
+    font-size: 18px; /* 텍스트 크기 */
+    margin-bottom: 10px; /* 텍스트 아래 마진 */
+    color: #ffffff; /* 텍스트 색상 */
+}

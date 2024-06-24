@@ -1,8 +1,8 @@
-/* Kavoon 글꼴을 가져오는 코드 */
+/* Custom font imports */
 @font-face {
-  font-family : "LINE Seed Sans KR";
-  font-weight : normal;
-  src : url("./image/LINESeedKR-Rg.ttf") format ("truetype");
+  font-family: "LINE Seed Sans KR";
+  font-weight: normal;
+  src: url("./image/LINESeedKR-Rg.ttf") format("truetype");
 }
 
 @font-face {
@@ -22,26 +22,25 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 0 40px; /* 양쪽에 여백 추가 */
 }
 
 /* 상단 헤더와 하단 푸터 */
 .App-header, .App-footer {
   background-color: black;
   padding: 20px 0; /* 위아래 패딩 조정 */
-  font-size: 50px;
   position: sticky;
-  top: 0;
   left: 0;
   right: 0;
   width: 100%;
   z-index: 1000;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 /* 헤더에 Kavoon 글꼴 적용 */
 .App-header {
   font-family: 'Kavoon';
+  font-size: 50px;
+  text-align: center; /* 텍스트 좌측 정렬 */
 }
 
 /* 푸터에 LINE Seed Sans KR 글꼴 적용 */
@@ -49,6 +48,7 @@
   font-family: 'LINE Seed Sans KR';
   font-weight: bold;
   font-size: 30px;
+  text-align: center; /* 텍스트 좌측 정렬 */
   position: sticky;
   bottom: 0;
   z-index: 1000;
@@ -59,46 +59,72 @@
   font-family: 'LINE Seed Sans KR';
   font-size: 30px;
   flex: 1;
-  padding-left: 300px; /* 좌우 패딩을 동일하게 설정하여 레이아웃 일관성 유지 */
-  padding-right : 300px;
-  text-align: left;
+  padding: 0 15%; /* 좌우 패딩을 비율로 설정하여 더 넓은 여백 추가 */
+  text-align: center; /* 중앙 정렬 */
 }
 
 /* 이미지 그리드 */
 .image-row {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
   gap: 15px;
-  justify-content: center;
+  justify-content: center; /* 이미지를 중앙에 정렬 */
+  width: 100%;
+  margin: 20px 0; /* 위아래 마진 추가 */
 }
 
 .image-container {
-  margin-left : 150px;
-  margin-right : 10px;
-
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  flex: 1; /* 각 이미지가 동일한 비율로 확장 */
+  max-width: 250px; /* 이미지의 최대 너비 제한 */
+  height: auto;
+  overflow: hidden; /* 이미지가 잘리지 않도록 설정 */
 }
 
-
-/* 이미지 스타일 */
 .image-container img {
   width: 100%;
+  height: auto; /* 비율을 유지하면서 자동으로 크기를 조정 */
   border-radius: 8px;
-  transition: transform 1s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
-/* 이미지 호버 효과 */
 .image-container img:hover {
   transform: scale(1.1);
 }
 
+/* 메인 이미지와 설명 텍스트를 담는 컨테이너 */
+.main-section {
+  display: flex;
+  justify-content: space-between; /* 좌우에 공간 배분 */
+  align-items: center; /* 세로축 중앙 정렬 */
+  margin-top: 20px;
+}
+
+.text-container {
+  flex: 1; /* 텍스트가 남은 공간을 차지하도록 설정 */
+  padding-right: 30px; /* 메인 이미지와의 간격을 위한 패딩 */
+  text-align: left; /* 텍스트를 좌측 정렬 */
+}
+
+.main-image-container {
+  flex: 1; /* 이미지가 남은 공간을 차지하도록 설정 */
+  max-width: 400px; /* 메인 이미지의 최대 너비 설정 */
+  text-align: right; /* 우측 정렬 */
+}
+
+.main-image {
+  width: 100%; /* 메인 이미지의 너비를 컨테이너에 맞춤 */
+  height: auto; /* 비율을 유지하면서 크기 조정 */
+  border-radius: 20px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.main-image:hover {
+  transform: scale(1.05);
+}
+
 /* 버튼 스타일 */
 .A-Button {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   display: inline-block;
   background-color: #ff6347;
   color: white;
@@ -106,12 +132,12 @@
   font-size: 25px;
   font-weight: 400;
   text-decoration: none;
-  border-style: none;
+  border: none;
   border-radius: 15px;
   transition: background-color 0.3s;
+  margin: 10px 0; /* 위아래에 마진 추가 */
 }
 
-/* 버튼 호버 효과 */
 .A-Button:hover {
   background-color: #555;
 }
@@ -126,6 +152,7 @@
   font-size: 70px;
   font-weight: 700;
   margin-bottom: 10px;
+  text-align: left; /* 텍스트를 좌측 정렬 */
 }
 
 /* 텍스트 스타일 */
@@ -133,6 +160,7 @@
   font-size: 25px;
   color: lightgray;
   margin-bottom: 20px;
+  text-align: left; /* 텍스트를 좌측 정렬 */
 }
 
 /* 중요한 텍스트 스타일 */
@@ -140,33 +168,170 @@
   font-size: 40px;
   font-weight: bold;
   color: white;
+  text-align: left; /* 텍스트를 좌측 정렬 */
 }
 
 /* 굵은 텍스트 스타일 */
 .bold-text {
   font-weight: bold;
   color: white;
+  text-align: left; /* 텍스트를 좌측 정렬 */
 }
 
-/* 이미지 컨테이너 및 메인 이미지 스타일 */
-.slider {
-  width: 80%;
-  margin: 20px auto;
+.imm-Text {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: left; /* 텍스트를 좌측 정렬 */
 }
 
-.image-container img,
-img[alt="Main Image"] {
-  width: 100%;
-  border-radius: 20px;
-  transition: filter 0.3s ease;
+/* 버튼 컨테이너를 중앙에 배치 */
+.button-container {
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  gap: 10px; /* 버튼 사이의 간격 */
+  margin-top: 20px; /* 위쪽에 마진 추가 */
 }
 
 /* 반응형 디자인을 위한 미디어 쿼리 */
+@media screen and (max-width: 1200px) {
+  .App-header {
+    font-size: 40px;
+  }
+
+  .App-footer {
+    font-size: 25px;
+  }
+
+  .Title {
+    font-size: 60px;
+    text-align: left; /* 텍스트를 좌측 정렬 */
+  }
+  
+  .im-Text {
+    font-size: 35px;
+    text-align: left; /* 텍스트를 좌측 정렬 */
+  }
+
+  .content {
+    padding: 0 10%; /* 큰 화면에서 좌우 여백 조정 */
+  }
+
+  .A-Button {
+    font-size: 20px;
+    padding: 10px 15px;
+  }
+
+  .image-row {
+    gap: 10px;
+    justify-content: space-around; /* 그리드 템플릿 조정 */
+  }
+
+  .main-image {
+    width: 60%;
+  }
+
+  .text-container,
+  .main-image-container {
+    max-width: 45%; /* 조정된 너비 */
+    text-align: left; /* 텍스트를 좌측 정렬 */
+  }
+}
+
 @media screen and (max-width: 768px) {
   .App {
-    padding: 0 10px; /* 작은 화면에 대한 패딩 조정 */
+    padding: 0 20px; /* 작은 화면에 대한 기본 여백 추가 */
   }
+
+  .App-header {
+    font-size: 30px;
+  }
+
+  .App-footer {
+    font-size: 20px;
+  }
+
   .content {
-    padding: 10px; /* 작은 화면에 대한 콘텐츠 패딩 조정 */
+    padding: 0 5%; /* 작은 화면에 대한 콘텐츠 여백 조정 */
+  }
+
+  .Title {
+    font-size: 50px;
+    text-align: left; /* 텍스트를 좌측 정렬 */
+  }
+
+  .Text {
+    font-size: 20px;
+    text-align: left; /* 텍스트를 좌측 정렬 */
+  }
+
+  .im-Text {
+    font-size: 30px;
+    text-align: center; /* 텍스트를 좌측 정렬 */
+  }
+
+  .A-Button {
+    font-size: 18px;
+    padding: 10px 15px;
+  }
+
+  .image-row {
+    flex-direction: column; /* 작은 화면에서는 수직으로 정렬 */
+  }
+
+  .main-section {
+    flex-direction: column; /* 작은 화면에서는 수직으로 정렬 */
+    align-items: center;
+  }
+
+  .text-container,
+  .main-image-container {
+    max-width: 100%; /* 조정된 너비 */
+    padding-right: 0;
+    text-align: center; /* 텍스트를 중앙 정렬 */
+  }
+
+  .main-image {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .App-header, .App-footer {
+    padding: 10px 0;
+  }
+
+  .App-header {
+    font-size: 25px;
+  }
+
+  .App-footer {
+    font-size: 18px;
+  }
+
+  .Title {
+    font-size: 40px;
+    text-align: left; /* 텍스트를 좌측 정렬 */
+  }
+
+  .im-Text {
+    font-size: 25px;
+    text-align: left; /* 텍스트를 좌측 정렬 */
+  }
+
+  .A-Button {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+
+  .content {
+    padding: 0 10px; /* 매우 작은 화면에 대한 콘텐츠 패딩 조정 */
+  }
+
+  .image-row {
+    flex-direction: column; /* 매우 작은 화면에서는 수직으로 정렬 */
+  }
+
+  .main-image {
+    width: 80%;
   }
 }
