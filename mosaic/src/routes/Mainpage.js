@@ -253,6 +253,7 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
                 const formData = new FormData();
                 formData.append('file', file);
                 const response = await axios.post(uploadURL, formData, {
+                    withCredentials: true,
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -275,7 +276,7 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
         // 카테고리에 따라 API URL 설정
         switch (selectedCategory) {
             case "face":
-                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/face-mosaic"; // 얼굴 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/invert"; // 얼굴 모자이크 API URL
                 break;
             case "license_plate":
                 invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/license-plate-mosaic"; // 자동차 번호판 모자이크 API URL
@@ -291,13 +292,13 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
                 return;
         }
 
-        axios.post(invertURL, { photo_id: photoId })
+        axios.post(invertURL, { photo_id: photoId }, {withCredentials:true})
             .then((res) => {
                 console.log(res);
                 const { detect, imgsrc } = res.data;
                 if (detect) {
                     const fullImageUrl = `https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/${imgsrc}`;
-                    setInvertedImageUrl(fullImageUrl); // 반전된 이미지 URL 설정
+                    setInvertedImageUrl(fullImageUrl); // 모자이크된 이미지 URL 설정
                 } else {
                     alert('다른 이미지를 선택해주세요.');
                 }
@@ -307,21 +308,30 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
             });
     };
 
-    const handleDownload = () => {
+    const handleDownload = async () => {
         if (invertedImageUrl) {
-            // Download the modified image from the backend
-            const link = document.createElement('a');
-            link.href = invertedImageUrl;
-            link.download = 'mos-AIc_processed_image';
-            link.click();
-        } else if (uploadedInfo && uploadedInfo.imageUrl) {
-            // Download the original uploaded image
-            const link = document.createElement('a');
-            link.href = uploadedInfo.imageUrl;
-            link.download = uploadedInfo.name || 'uploaded_image';
-            link.click();
+            // Fetch the image and convert it to a Blob
+            try {
+                const response = await fetch(invertedImageUrl);
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+    
+                // Create a link element and set its href to the Blob URL
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'mos-AIc_processed_image'; // Set the default file name for download
+                document.body.appendChild(link); // Append the link to the body
+                link.click(); // Simulate a click to trigger the download
+                document.body.removeChild(link); // Remove the link from the body
+                URL.revokeObjectURL(url); // Revoke the object URL after download
+            } catch (error) {
+                console.error('Error downloading the processed image:', error);
+            }
+        } else {
+            alert('다운로드할 모자이크된 이미지가 없습니다.');
         }
     };
+    
 
     return (
         <div>
