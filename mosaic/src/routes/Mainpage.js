@@ -280,16 +280,16 @@ const UploadBox = ({ selectedCategory, invertedImageUrl, setInvertedImageUrl, up
         // 카테고리에 따라 API URL 설정
         switch (selectedCategory) {
             case "face":
-                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/invert"; // 얼굴 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/face"; // 얼굴 모자이크 API URL
                 break;
             case "license_plate":
-                invertURL = ""; // 자동차 번호판 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/license_plate"; // 자동차 번호판 모자이크 API URL
                 break;
             case "card_number":
                 invertURL = ""; // 카드번호 모자이크 API URL
                 break;
             case "address":
-                invertURL = ""; // 주소 모자이크 API URL
+                invertURL = "https://port-0-back-end-am952nlsys9dvi.sel5.cloudtype.app/address"; // 주소 모자이크 API URL
                 break;
             default:
                 alert('카테고리를 선택해주세요.');
